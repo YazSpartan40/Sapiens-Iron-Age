@@ -73,7 +73,27 @@ function mod:onload(model)
     
     model.remapModels.stoneHammerBuild = model.remapModels.stoneHammerBuild or {}
     model.remapModels.stoneHammerBuild.ironHammerBuild = {}
+
+    -- Charcoal model remaps from merged Charcoal mod
+    -- Try remapping charcoal model to use charcoal material
+    -- The charcoal.glb model needs to have its material slot remapped
     
+    -- Try coal remap (for coal-based models)
+    model.remapModels.ore = model.remapModels.ore or {}
+    model.remapModels.ore.charcoal = { ore = "charcoal" }
+    
+    -- Also try direct charcoal remap
+    model.remapModels.charcoal = model.remapModels.charcoal or {}
+    model.remapModels.charcoal.charcoal = { charcoal = "charcoal" }
+    
+    -- Try resource remap (like branch/log use)
+    model.remapModels.resource = model.remapModels.resource or {}
+    model.remapModels.resource.charcoal = { resource = "charcoal" }
+    
+    -- Try wood remap
+    model.remapModels.wood = model.remapModels.wood or {}
+    model.remapModels.wood.charcoal = { wood = "charcoal" }
+
     mj:log("Iron Age: All model remaps completed (ore, ingot, 6 tool heads, 2 small tools, 4 assembled tools + builds)")
 end
 

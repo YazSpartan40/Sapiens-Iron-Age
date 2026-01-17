@@ -12,8 +12,8 @@ function mod:onload(material)
     local ironMetalColor = vec3(0.42, 0.48, 0.52)
     mj:insertIndexed(material.types, material.mat("iron", ironMetalColor, 0.15, 1.0))
 
-    -- Iron ore: dark rocky iron oxide color (#5e5652)
-    local ironOreColor = vec3(0.368, 0.337, 0.321)
+    -- Iron ore: rusty brown iron oxide color (improved from grayish to reddish-brown)
+    local ironOreColor = vec3(0.5, 0.25, 0.15)  -- Rusty brown: more red, less green/blue
     mj:insertIndexed(material.types, material.mat("ironOre", ironOreColor, 0.45, 0.0))
     material.types.ironOre.metal = 0.0
 
@@ -30,6 +30,14 @@ function mod:onload(material)
         roughness = 0.45,
         metal = 0.0
     }
+
+    -- Charcoal material from merged Charcoal mod
+    -- Deep black charcoal color - very dark grey/black
+    -- RGB values close to 0 for deep black
+    local charcoalColor = vec3(0.01, 0.01, 0.01) -- Very dark black
+    mj:insertIndexed(material.types, material.mat("charcoal", charcoalColor, 0.9, 0.0))
+    material.types.charcoal.metal = 0.0  -- Not metallic
+
     mj:log("Iron Age: Materials registered")
 end
 

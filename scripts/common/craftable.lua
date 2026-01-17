@@ -45,15 +45,26 @@ function mod:onload(craftable)
                 }
             },
             skills = { required = skill.types.blacksmithing.index },
-            requiredResources = {{
-                type = resource.types.ironOre.index,
-                count = 3,
-                afterAction = {
-                    actionTypeIndex = action.types.inspect.index,
-                    duration = 15.0,
-                    durationWithoutSkill = 30.0,
+            requiredResources = {
+                {
+                    type = resource.types.ironOre.index,
+                    count = 2,
+                    afterAction = {
+                        actionTypeIndex = action.types.inspect.index,
+                        duration = 15.0,
+                        durationWithoutSkill = 30.0,
+                    }
+                },
+                {
+                    type = resource.types.charcoal.index,
+                    count = 1,
+                    afterAction = {
+                        actionTypeIndex = action.types.inspect.index,
+                        duration = 15.0,
+                        durationWithoutSkill = 30.0,
+                    }
                 }
-            }},
+            },
             requiredTools = { tool.types.crucible.index },
             requiredCraftAreaGroups = { craftAreaGroup.types.kiln.index },
             dontPickUpRequiredTool = true,
@@ -371,6 +382,94 @@ function mod:onload(craftable)
                 { type = resource.types.flaxTwine.index, count = 1 },
             },
         })
+
+        -- Charcoal craftables from merged Charcoal mod
+        local cookingStickRotationOffset = mat3Rotate(mat3Identity, math.pi * 0.25, vec3(0.0,1.0,0.0))
+        craftable.cookingStickRotationOffset = cookingStickRotationOffset
+        craftable.cookingStickRotation = mat3Identity
+        
+        mj:log("Iron Age: Registering charcoal craftables")
+        
+        -- PRODUCTION: Charcoal from 3 branches → 1 charcoal (campfire)
+        craftable:addCraftable("charcoalFromBranches", {
+            name = locale:get("craftable_charcoal"),
+            plural = locale:get("craftable_charcoal_plural"),
+            summary = locale:get("craftable_charcoal_summary"),
+            iconGameObjectType = gameObject.typeIndexMap.charcoal,
+            classification = constructable.classifications.craft.index,
+            
+            buildSequence = craftable:createStandardBuildSequence(actionSequence.types.fireStickCook.index, nil),
+            inProgressBuildModel = "craftSimple",  -- Use craftSimple
+            
+            outputObjectInfo = {
+                objectTypesArray = {
+                    gameObject.typeIndexMap.charcoal,
+                }
+            },
+
+            skills = {
+                required = skill.types.campfireCooking.index,
+            },
+            requiredResources = {
+                {
+                    type = resource.types.branch.index,
+                    count = 3,
+                },
+            },
+            
+            requiredCraftAreaGroups = {
+                craftAreaGroup.types.campfire.index,
+                craftAreaGroup.types.kiln.index,
+            },
+            attachResourceToHandIndex = 1,
+            attachResourceOffset = vec3xMat3(vec3(-0.7,0.1,0.02), craftable.cookingStickRotationOffset),
+            attachResourceRotation = mat3Rotate(mat3Identity, math.pi * 0.5, vec3(0.0,0.0,1.0)),
+            temporaryToolObjectType = gameObject.typeIndexMap.stick,
+            temporaryToolOffset = vec3xMat3(vec3(-0.35,0.0,0.0), craftable.cookingStickRotationOffset),
+            temporaryToolRotation = craftable.cookingStickRotation,
+        })
+        
+        -- PRODUCTION: Charcoal from 1 log → 2 charcoal (campfire)
+        craftable:addCraftable("charcoalFromLog", {
+            name = locale:get("craftable_charcoal"),
+            plural = locale:get("craftable_charcoal_plural"),
+            summary = "Burn a log to create charcoal.",
+            iconGameObjectType = gameObject.typeIndexMap.charcoal,
+            classification = constructable.classifications.craft.index,
+            
+            buildSequence = craftable:createStandardBuildSequence(actionSequence.types.fireStickCook.index, nil),
+            inProgressBuildModel = "craftSimple",  -- Use craftSimple model
+            
+            outputObjectInfo = {
+                objectTypesArray = {
+                    gameObject.typeIndexMap.charcoal,
+                    gameObject.typeIndexMap.charcoal,
+                }
+            },
+
+            skills = {
+                required = skill.types.campfireCooking.index,
+            },
+            requiredResources = {
+                {
+                    type = resource.types.log.index,
+                    count = 1,
+                },
+            },
+            
+            requiredCraftAreaGroups = {
+                craftAreaGroup.types.campfire.index,
+                craftAreaGroup.types.kiln.index,
+            },
+            attachResourceToHandIndex = 1,
+            attachResourceOffset = vec3xMat3(vec3(-0.7,0.1,0.02), craftable.cookingStickRotationOffset),
+            attachResourceRotation = mat3Rotate(mat3Identity, math.pi * 0.5, vec3(0.0,0.0,1.0)),
+            temporaryToolObjectType = gameObject.typeIndexMap.stick,
+            temporaryToolOffset = vec3xMat3(vec3(-0.35,0.0,0.0), craftable.cookingStickRotationOffset),
+            temporaryToolRotation = craftable.cookingStickRotation,
+        })
+        
+        mj:log("Iron Age: 2 production craftable recipes registered (unlocked by research)")
 
         mj:log("Iron Age: All craftables registered (1.8x speed/damage, 6.0x durability) - using iron component assemblies")
     end

@@ -43,6 +43,23 @@ function mod:onload(gameObject)
             mass = 2.0,
             category = "resources",
         },
+
+        -- Charcoal from merged Charcoal mod
+        charcoal = {
+            name = locale:get("object_charcoal"),
+            plural = locale:get("object_charcoal_plural"),
+            modelName = "charcoal",  -- References charcoal.glb in models folder
+            materialName = "charcoal",  -- Force use of charcoal material (black)
+            scale = 1.0,
+            hasPhysics = true,
+            resourceTypeIndex = resource.types.charcoal.index,
+            markerPositions = {
+                { worldOffset = vec3(0.0, mj:mToP(0.1), 0.0) }
+            },
+            mass = 0.5,
+            category = "resources",
+        },
+
         -- NOTE: Tool heads and assembled tools are NOT registered here!
         -- They are created by craftable.lua using addGameObjectInfo
         -- This matches Arsenic Bronze pattern

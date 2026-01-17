@@ -112,6 +112,24 @@ localizations.values = {
     research_ironSmelting_name = "Iron Smelting",
     research_ironSmelting_description = "Discover how to smelt iron ore into iron ingots.",
     research_ironSmelting_clueText = "Pick up iron ore to begin research.",
+
+    -- Charcoal from merged Charcoal mod
+    resource_charcoal = "Charcoal",
+    resource_charcoal_plural = "Charcoal",
+
+    object_charcoal = "Charcoal",
+    object_charcoal_plural = "Charcoal",
+    object_charcoal_summary = "Dense, black fuel created from burning wood. Burns 5x longer than branches.",
+
+    storage_charcoal = "Charcoal",
+
+    craftable_charcoal = "Charcoal",
+    craftable_charcoal_plural = "Charcoal",
+    craftable_charcoal_summary = "Burn branches or logs at the campfire to create efficient charcoal fuel",
+
+    research_charcoalMaking_name = "Charcoal Making",
+    research_charcoalMaking_description = "Discover how to transform wood into charcoal by slow burning at the campfire. Charcoal burns 5x longer than regular branches.",
+
 }
 
 return localizations

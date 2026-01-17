@@ -121,7 +121,25 @@ function mod:onload(resource)
         tradeBatchSize = 3,
         tradeValue = 80,
     })
-    
+
+    -- Charcoal resource from merged Charcoal mod
+    typeMaps:insert("resource", resource.types, {
+        key = "charcoal",
+        name = locale:get("resource_charcoal"),
+        plural = locale:get("resource_charcoal_plural"),
+        displayGameObjectTypeIndex = gameObjectTypeIndexMap.charcoal,
+        tradeValue = 4,
+        tradeBatchSize = 10,
+    })
+
+    -- Add charcoal to fuel resource groups (FIXED - use .resourceTypes)
+    table.insert(resource.groups.campfireFuel.resourceTypes, resource.types.charcoal.index)
+    table.insert(resource.groups.kilnFuel.resourceTypes, resource.types.charcoal.index)
+
+    -- Update the containsTypesSet hash for both groups
+    resource:updateGroupContainedTypesHashForAddition(resource.groups.campfireFuel.index)
+    resource:updateGroupContainedTypesHashForAddition(resource.groups.kilnFuel.index)
+
     mj:log("Iron Age: Resources registered")
 end
 

@@ -151,7 +151,29 @@ function mod:onload(storage)
         storage.typesByResource[resource.types.ironHammer.index] = hammerStorage.index
         mj:log("Iron Age: Added ironHammer to hammer storage")
     end
-    
+
+    -- Charcoal storage from merged Charcoal mod
+    typeMaps:insert("storage", storage.types, {
+        key = "charcoal",
+        name = locale:get("storage_charcoal"),
+        displayGameObjectTypeIndex = gameObjectTypeIndexMap.charcoal,
+        resources = {
+            resource.types.charcoal.index,
+        },
+        storageBox = {
+            size = vec3(0.3, 0.2, 0.3),
+            rotationFunction = function(uniqueID, seed)
+                local randomValue = rng:valueForUniqueID(uniqueID, seed)
+                local rotation = mat3Rotate(mat3Identity, randomValue * 6.282, vec3(0.0,1.0,0.0))
+                return rotation
+            end,
+        },
+        maxCarryCount = 4,
+        maxCarryCountLimitedAbility = 2,
+        maxCarryCountForRunning = 1,
+        carryOffset = vec3(0.0, 0.1, 0.0),
+    })
+
     mj:log("Iron Age: All iron tools added to vanilla storage types (10 items remapped)")
 end
 

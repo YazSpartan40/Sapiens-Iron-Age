@@ -21,11 +21,28 @@ function mod:onload(inspectCraftPanel)
         table.insert(kilnCraftables, constructable.types.ironPickaxehead.index)
         table.insert(kilnCraftables, constructable.types.ironHammerhead.index)
         
+        -- Charcoal craftables from merged Charcoal mod
+        table.insert(kilnCraftables, constructable.types.charcoalFromBranches.index)
+        table.insert(kilnCraftables, constructable.types.charcoalFromLog.index)
+        
         mj:log("Iron Age: Added 7 craftables to kiln itemLists")
     else
         mj:warn("Iron Age: Could not find brickKiln in itemLists")
     end
-    
+
+    -- Add charcoal craftables to campfire menu from merged Charcoal mod
+    local campfireCraftables = inspectCraftPanel.itemLists[gameObject.typeIndexMap.campfire]
+
+    if campfireCraftables then
+        -- Add the charcoal recipes
+        table.insert(campfireCraftables, constructable.types.charcoalFromBranches.index)
+        table.insert(campfireCraftables, constructable.types.charcoalFromLog.index)
+
+        mj:log("Iron Age: Added 2 charcoal recipes to campfire menu")
+    else
+        mj:warn("Iron Age: Could not find campfire in itemLists")
+    end
+
     -- Add assembled tools to craftArea itemLists
     local craftAreaCraftables = inspectCraftPanel.itemLists[gameObject.typeIndexMap.craftArea]
     
